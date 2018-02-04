@@ -39,10 +39,10 @@ TEMPLATE = """
 
 
 def main(**kwargs):
-    api = twitter.Api(CONSUMER_KEY =  OX8dP,
-                      CONSUMER_SECRET = QCtVLMFbrPuyO28Dyq2e68e,
-                      ACCESS_KEY = 920695116AHPQrVD5ZriAZNMb,
-                      ACCESS_SECRET =  u0WN8zzyl1kxlPtF6)
+    api = twitter.Api(CONSUMER_KEY =  ,
+                      CONSUMER_SECRET = ,
+                      ACCESS_KEY = ,
+                      ACCESS_SECRET = )
 
     if kwargs['user_id'] is not None:
         statuses = api.GetUserTimeline(user_id=kwargs['user_id'])
