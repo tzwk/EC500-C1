@@ -11,8 +11,7 @@ def labelAllDownloadedImages():
 
 	path = os.getcwd()
 	for filename in os.listdir(path):
-    	if filename.endswith('.jpg'):
-    		responseLabels = labelImage(filename)
+    	responseLabels = labelImage(filename)
 
     listOfReponseLabels.append(responseLabels)
 
@@ -24,4 +23,12 @@ def labelImage(client, filename):
     with open(filename,'rb') as imag:
         response = client.detect_labels(Image={'Bytes': imag.read()})
 
+    saveImageAsPatternizedName(filename)
+
     return response['Labels']
+
+def saveImageAsPatternizedName(filename):
+	if filename.endswith('.jpg'):
+		os.rename(filename,'captured'+str(i)+'.jpg')
+	elif filename.endswith('.png'):
+		os.rename(filename,'captured'+str(i)+'.png')
