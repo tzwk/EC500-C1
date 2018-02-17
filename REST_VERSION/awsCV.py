@@ -1,6 +1,5 @@
 import boto3
 import os
-import json
 
 def createAWSClient():
 	client=boto3.client('rekognition','us-east-2')
@@ -10,6 +9,7 @@ def createAWSClient():
 def labelAllDownloadedImages():
 	listOfReponseLabels = []
 
+	path = os.getcwd()
 	for filename in os.listdir(path):
     	if filename.endswith('.jpg'):
     		responseLabels = labelImage(filename)
