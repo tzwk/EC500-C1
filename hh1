@@ -1,0 +1,41 @@
+import collections
+# create a dictionary to store OwnerUserID and scores
+D = {}
+#iterate over df to aggregate OwnerUserIds and add up total scores
+for row in df2.itertuples():
+    key = row.OwnerUserId
+    if key != 'None' and key not in D:
+        D[key] = 1
+    elif key != 'None':
+        D[key] += 1
+C = collections.Counter(D)
+Top100 = C.most_common(100) # get the top 100 OwnerUserIds with the highest total scores
+
+AllTags = set() # initialize a set to store all the tags the top 100 users used
+for t in Top100:
+    UserTags = df2[(df2['OwnerUserId'] == t[0])].as_matrix(['Tag'])
+    for i in UserTags:
+        if i[0] != 'None' and i[0] not in AllTags:
+            AllTags.add(i[0])
+AllTags = sorted(AllTags)
+
+# Create a dictionary to store one string for each of the top 100 users that consists of 0s and 1s.
+# There are 101 digits corresponding to all 101 tags we have seen. Each digit indicates whether this user
+# has used this tag or not. 0 for no and 1 for yes. Note that the 101 tags are sorted.
+features = {}
+for t in Top100:
+    feature = ''
+    UserTags = df[(df['OwnerUserId'] == t[0])].as_matrix(['Tag'])
+    for x in AllTags:
+        if x in UserTags:
+            feature += '1'
+        else:
+            feature += '0'
+    features[t[0]] = feature
+    
+# Turn the strings of 0s and 1s into a matrix
+X = []
+for key, value in features.iteritems():
+    v = map(int, list(value))
+    X.append(v)
+X = np.asarray(X)
